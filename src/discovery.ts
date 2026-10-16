@@ -185,8 +185,11 @@ async function doDiscoverArtifacts(
         if (provider === "opencode") {
           return path.endsWith(".json") && basename(path).startsWith("ses_");
         }
+        // Fix for vercel plugin
         return (
           path.endsWith(".jsonl") &&
+          !/[\\/]vercel-plugin[\\/]/.test(path) &&
+          !/[\\/]subagents[\\/]/.test(path) &&
           (provider !== "pi" || isCanonicalPiSessionFile(path))
         );
       })
